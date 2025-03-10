@@ -39,7 +39,8 @@ body {
 
 .nav_links {
     display: flex;
-    gap: 2rem; /* Reemplaza el margin-left */
+    flex-wrap: wrap;
+    gap: 1rem; /* Reemplaza el margin-left */
     list-style: none;
     padding: 0.9rem;
     justify-content: center; /* Centra los links */
@@ -376,7 +377,6 @@ button:hover {
 .user-icon {
     max-width: 40px !important; /* Fuerza el tamaño */
     height: 40px !important;
-    margin-left: 1rem;
     cursor: pointer;
     transition: transform 0.3s;
     display: inline;
@@ -389,7 +389,6 @@ button:hover {
     height: 80% !important;
     object-fit: contain;
     display: block;
-    padding: 2px; /* Espacio de respiro */
 }
 
 .user-icon:hover {
@@ -475,14 +474,28 @@ button:hover {
 
 @media (max-width: 768px) {
     .user-icon {
-        font-size: 3rem; /* ← Esta regla estaba causando el problema */
-        margin-right: 1rem;
+        margin-left: auto;
+        max-width: 30px !important;
+        height: 30px !important;
     }
+
 }
 
 
 @media (max-width: 480px) {
-    .carousel-slide {
-        flex: 0 0 calc(100% - 20px); /* 1 slide */
+    .nav_links {
+        gap: 0.2rem;
+    }
+    
+    .nav_links a {
+        font-size: 0.5rem;
+    }
+    
+    .logo-img {
+        height: 50px;
+    }
+    
+    .user-status span {
+        display: none;
     }
 }

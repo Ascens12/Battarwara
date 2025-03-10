@@ -1,10 +1,10 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+ini_set('display_errors', 0);
+error_reporting(0);
 
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 /**********************************************
  * MANEJO DE IDIOMAS CORREGIDO
  **********************************************/
@@ -20,7 +20,9 @@ if (isset($_GET['lang']) && in_array($_GET['lang'], $available_langs)) {
         setcookie('lang', $_GET['lang'], $cookie_time, '/');
     }
     // Redirección limpia para eliminar parámetros GET
-    header("Location: http://battarwara.rf.gd/" . strtok($_SERVER['REQUEST_URI'], '?'));
+    $path = strtok($_SERVER['REQUEST_URI'], '?');
+    $path = '/' . ltrim($path, '/');  // Asegurar una sola barra al inicio
+    header("Location: http://battar.free.nf" . $path);
     exit;
 }
 
@@ -113,12 +115,17 @@ $translations = [
 /**********************************************
  * CONEXIÓN A BASE DE DATOS
  **********************************************/
-$servername = "sql209.infinityfree.com";
-$username = "if0_38483469"; 
-$password = "L25Oqb7FE7B"; 
-$dbname = "if0_38483469_battarwara"; 
+$servername = "sql112.infinityfree.com";  // Nuevo hostname
+$username = "if0_38483648";               // Nuevo usuario
+$password = "cCXz0BjMSfRVN";  
+$dbname = "if0_38483648_if0_38483648_battarwara ";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli(
+    "sql112.infinityfree.com",    // Hostname
+    "if0_38483648",              // Usuario
+    "cCXz0BjMSfRVN",             // Contraseña
+    "if0_38483648_if0_38483648_battarwara" // Base de datos ✅
+);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -155,7 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['registrar'])) {
         $stmt->bind_param("sss", $email, $usuario, $password_hash);
         
         if ($stmt->execute()) {
-            header("Location: http://battarwara.rf.gd/index.php?registro=exito");
+            header("Location: http://battar.free.nf/index.php?registro=exito");
             exit;
         } else {
             $registro_error = "Error al registrar: " . $conn->error;
@@ -177,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
         $user = $result->fetch_assoc();
         if (password_verify($password, $user['password'])) {
             $_SESSION['usuario'] = $user['usuario'];
-            header("Location: http://battarwara.rf.gd/index.php");
+            header("Location: http://battar.free.nf/index.php");
             exit;
         } else {
             $login_error = "Contraseña incorrecta";
@@ -189,7 +196,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['login'])) {
 
 if (isset($_GET['logout'])) {
     session_destroy();
-    header("Location: http://battarwara.rf.gd/index.php");
+    header("Location: http://battar.free.nf/index.php");
     exit;
 }
 ?>
@@ -352,35 +359,35 @@ if (isset($_GET['logout'])) {
             <div class="carousel-container">
                 <div class="carousel-track">
                     <div class="carousel-slide">
-                        <img src="Topper.jpg" alt="Topper" class="category-img">
+                        <img src="./img/Topper.jpg" alt="Topper" class="category-img">
                         <h3 class="product-title"><?= $translations[$current_lang]['topper_title'] ?></h3>
                         <p class="product-price">$299.00 MXN</p>
                         <button class="buy-btn"><?= $translations[$current_lang]['comprar_ahora'] ?></button>
                         <button class="buy-btn"><?= $translations[$current_lang]['agregar_carrito'] ?></button>
                     </div>
                     <div class="carousel-slide">
-                        <img src="Dispensador.jpg" alt="Dispensador" class="category-img">
+                        <img src="img/Dispensador.jpg" alt="Dispensador" class="category-img">
                         <h3 class="product-title"><?= $translations[$current_lang]['dispensador_title'] ?></h3>
                         <p class="product-price">$199.00 MXN</p>
                         <button class="buy-btn"><?= $translations[$current_lang]['comprar_ahora'] ?></button>
                         <button class="buy-btn"><?= $translations[$current_lang]['agregar_carrito'] ?></button>
                     </div>
                     <div class="carousel-slide">
-                        <img src="PortaFruta.jpg" alt="PortaFruta" class="category-img">
+                        <img src="/img/PortaFruta.jpg" alt="PortaFruta" class="category-img">
                         <h3 class="product-title"><?= $translations[$current_lang]['portafruta_title'] ?></h3>
                         <p class="product-price">$219.00 MXN</p>
                         <button class="buy-btn"><?= $translations[$current_lang]['comprar_ahora'] ?></button>
                         <button class="buy-btn"><?= $translations[$current_lang]['agregar_carrito'] ?></button>
                     </div>
                     <div class="carousel-slide">
-                        <img src="Cuchillos.jpg" alt="Cuchillos" class="category-img">
+                        <img src="/img/Cuchillos.jpg" alt="Cuchillos" class="category-img">
                         <h3 class="product-title"><?= $translations[$current_lang]['cuchillos_title'] ?></h3>
                         <p class="product-price">$223.00 MXN</p>
                         <button class="buy-btn"><?= $translations[$current_lang]['comprar_ahora'] ?></button>
                         <button class="buy-btn"><?= $translations[$current_lang]['agregar_carrito'] ?></button>
                     </div>
                     <div class="carousel-slide">
-                        <img src="PortaGalletas.jpg" alt="PortaGalletas" class="category-img">
+                        <img src="/img/PortaGalletas.jpg" alt="PortaGalletas" class="category-img">
                         <h3 class="product-title"><?= $translations[$current_lang]['portagalletas_title'] ?></h3>
                         <p class="product-price">$48.00 MXN</p>
                         <button class="buy-btn"><?= $translations[$current_lang]['comprar_ahora'] ?></button>

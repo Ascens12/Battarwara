@@ -1,0 +1,7 @@
+# Asegúrate de que se reconozcan los archivos PHP
+DirectoryIndex index.php index.html index.htm index2.html
+
+# Si tienes errores personalizados, añádelos aquí
+ErrorDocument 403 https://errors.infinityfree.net/errors/403/
+ErrorDocument 404 https://errors.infinityfree.net/errors/404/
+ErrorDocument 500 https://errors.infinityfree.net/errors/500/
